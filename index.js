@@ -18,5 +18,14 @@ mongoose.connect('mongodb://localhost:27017/healthcare', {
 //Import the Patient model
 const Patient = require('./models/Patient');
 
-
-
+//POST /patients - Add a new patient:
+app.post('/patients', async (req, res) => {
+    try {
+      const patient = new Patient(req.body);
+      await patient.save();
+      res.status(201).json(patient);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
+  
